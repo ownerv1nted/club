@@ -1,169 +1,198 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="utf-8"><title>Учёт клуба</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f6f4;--card:#fff;--tx:#1c1c1a;--mu:#6b6b66;--bd:#dcdcd6;--ac:#2a5bd7;--ok:#1d8a4e;--wa:#c27a00;--er:#c0392b}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--card:#212120;--tx:#ececE8;--mu:#9a9a94;--bd:#3a3a37;--ac:#6d93f5;--ok:#4cc380;--wa:#e8a63a;--er:#ef7b6e}}
-:root[data-theme="dark"]{--bg:#161615;--card:#212120;--tx:#ececE8;--mu:#9a9a94;--bd:#3a3a37;--ac:#6d93f5;--ok:#4cc380;--wa:#e8a63a;--er:#ef7b6e}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-nav{display:flex;gap:4px;overflow-x:auto;padding:8px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-nav button{flex:none}main{padding:12px;max-width:1000px;margin:auto}
-button,select,input{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:7px 10px}
-button{cursor:pointer}button.p{background:var(--ac);color:#fff;border-color:var(--ac)}button.on{border-color:var(--ac);color:var(--ac);font-weight:600}
-button.d{color:var(--er)}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
-.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:10px}.grid .c{margin:0}
-.t{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}.mu{color:var(--mu);font-size:13px}.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}
-.k{font-size:24px;font-weight:700}.kg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:10px}
-.bar{height:14px;background:var(--bd);border-radius:4px;overflow:hidden;flex:1}.bar i{display:block;height:100%;background:var(--ac)}
-.br{display:flex;gap:8px;align-items:center;margin:3px 0;font-size:13px}.br b{width:70px;font-weight:500}.br span{width:48px;text-align:right}
-.ov{color:var(--er)}.pa{color:var(--wa)}h3{margin:14px 0 6px}table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:5px;border-bottom:1px solid var(--bd);text-align:left}
-.sc{overflow-x:auto}dialog{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx)}
-</style></head><body>
+<html lang="ru"><head><meta charset="utf-8"><title>Клуб</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<nav id="nav"></nav><main id="m">Загрузка…</main>
-<dialog id="dlg"></dialog>
+<style>
+:root{--bg:#f2f2f7;--cd:#fff;--tx:#111;--mu:#8a8a8e;--ln:rgba(60,60,67,.16);--ac:#0a7aff;--ok:#2fa04f;--wa:#e08a00;--er:#e5453a;--gl:rgba(249,249,252,.72);--fl:rgba(120,120,128,.12)}
+:root[data-t=d]{--bg:#000;--cd:#1c1c1e;--tx:#f5f5f7;--mu:#98989f;--ln:rgba(84,84,88,.5);--ac:#4d9bff;--ok:#4cd070;--wa:#ffb340;--er:#ff6b60;--gl:rgba(28,28,30,.72);--fl:rgba(120,120,128,.24)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 -apple-system,system-ui,"SF Pro Text",Roboto,sans-serif;padding-top:env(safe-area-inset-top,0);padding-bottom:calc(84px + env(safe-area-inset-bottom,0))}
+main{padding:8px 16px;max-width:760px;margin:auto}
+h1{font-size:30px;line-height:1.1;letter-spacing:-.02em;font-weight:700;margin:14px 0 12px}h3{font-size:13px;letter-spacing:.02em;text-transform:uppercase;color:var(--mu);font-weight:600;margin:18px 4px 6px}
+.mu{color:var(--mu);font-size:13px}.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.c{background:var(--cd);border-radius:20px;padding:14px 16px;margin-bottom:12px}.g .c{margin:0}
+.t{font-size:38px;line-height:1.1;letter-spacing:-.02em;font-weight:600;font-variant-numeric:tabular-nums;margin:6px 0 2px}
+.r{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}.r>.f{flex:1}
+button,select,input{font:inherit;color:var(--tx);border:0;border-radius:12px;padding:11px 14px;background:var(--fl);min-height:44px}
+input,select{background:var(--fl);width:auto;min-width:0}button{cursor:pointer;font-weight:600;transition:transform 120ms ease-out,opacity 120ms}
+button:active{transform:scale(.96);opacity:.8}button.p{background:var(--ac);color:#fff}button.d{color:var(--er)}button.s{background:none;color:var(--er);font-weight:500}
+button.on{background:var(--ac);color:#fff}.sg{display:flex;background:var(--fl);border-radius:12px;padding:3px;gap:2px}.sg button{flex:1;background:none;min-height:36px;padding:6px;font-size:14px}.sg button.on{background:var(--cd);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ok);margin-right:6px}.pa .dot{background:var(--wa)}.ov{color:var(--er)}
+.tb{position:fixed;left:0;right:0;bottom:0;display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0));background:var(--gl);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-top:1px solid var(--ln);z-index:5}
+.tb button{flex:1;background:none;font-size:11px;padding:6px 0;display:flex;flex-direction:column;gap:2px;color:var(--mu);min-height:50px}.tb button.on{color:var(--ac)}.tb i{font-style:normal;font-size:20px}
+.k{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.k .c{margin:0}.k b{display:block;font-size:24px;letter-spacing:-.02em}
+.br{display:flex;gap:8px;align-items:center;margin:5px 0;font-size:13px}.br u{width:64px;text-decoration:none}.br div{flex:1;height:10px;background:var(--fl);border-radius:5px;overflow:hidden}.br i{display:block;height:100%;background:var(--ac);border-radius:5px}.br span{width:46px;text-align:right}
+.li{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--ln)}.li:last-child{border:0}
+#scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:8;display:none}
+#sheet{position:fixed;left:0;right:0;bottom:0;max-width:560px;margin:auto;max-height:88vh;overflow:auto;background:var(--cd);border-radius:24px 24px 0 0;padding:6px 18px calc(18px + env(safe-area-inset-bottom,0));z-index:9;display:none;box-shadow:0 -8px 40px rgba(0,0,0,.25)}
+.gr{width:40px;height:5px;border-radius:3px;background:var(--ln);margin:6px auto 14px;touch-action:none;position:relative}.gr:after{content:"";position:absolute;inset:-14px -40px}
+.bd{font-size:12px;border-radius:8px;padding:2px 8px;font-weight:600;background:var(--fl)}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+@media(prefers-reduced-transparency:reduce){.tb{background:var(--cd);backdrop-filter:none;-webkit-backdrop-filter:none}}
+</style></head><body>
+<main id="m"></main><nav class="tb" id="nav"></nav><div id="scrim"></div><div id="sheet"></div>
 <script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 try{Telegram.WebApp.ready();Telegram.WebApp.expand()}catch(e){}
-const $=s=>document.querySelector(s);
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const TY={PC:'ПК',PS5:'PS5',VIP:'PS5 VIP'};
-const DEF={rates:{PC:{d:700,n:900},PS5:{d:700,n:900},VIP:{d:900,n:1100}},from:10,to:24,fee:0.9};
-let S={places:[],tariffs:[],sessions:[],expenses:[],cfg:DEF},tab='live',P={u:'month',d:new Date().toISOString().slice(0,10)},db,now=Date.now();
+document.documentElement.dataset.t=(window.Telegram&&Telegram.WebApp.colorScheme)||(matchMedia('(prefers-color-scheme:dark)').matches?'d':'l');
+const TY={PC:'ПК',PS5:'PS5',VIP:'PS5 VIP'},p2=n=>String(n).padStart(2,'0');
+const DEF={rates:{PC:{d:700,n:900},PS5:{d:700,n:900},VIP:{d:900,n:1100}},from:10,to:24,fee:0.9,staff:['Владелец','Брат']};
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())};
+const localDT=t=>{const d=new Date(t);return today().slice(0,0)+d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':'+p2(d.getMinutes())};
+let S={places:[],tariffs:[],sessions:[],expenses:[],shifts:[],cfg:DEF},tab='live',sub='s',J=today(),P={u:'month',d:today()},db,now=Date.now(),dirty=false,SS,ST,SC,warned={};
 const id=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const money=n=>Math.round(n).toLocaleString('ru-RU')+' ֏';
-const C=()=>({...DEF,...S.cfg,rates:{...DEF.rates,...(S.cfg.rates||{})}});
-const isNight=h=>h<C().from||h>=C().to;
-const rate=(t,h)=>(C().rates[t]||{d:0,n:0})[isNight(h)?'n':'d'];
-// segments [s,e] -> hour slices
+const money=n=>Math.round(n).toLocaleString('ru-RU')+' ֏',C=()=>({...DEF,...S.cfg,rates:{...DEF.rates,...(S.cfg.rates||{})}});
+const isNight=h=>h<C().from||h>=C().to,rate=(t,h)=>(C().rates[t]||{d:0,n:0})[isNight(h)?'n':'d'];
 function slices(segs){const o=[];for(const [s,e] of segs){let t=s;while(t<e){const d=new Date(t),nx=new Date(d);nx.setMinutes(0,0,0);nx.setHours(d.getHours()+1);const te=Math.min(nx.getTime(),e);o.push({t,ms:te-t,h:d.getHours()});t=te}}return o}
-const allSegs=x=>[...(x.segs||[]),...(x.run?[[x.run,now]]:[])];
-const dur=x=>allSegs(x).reduce((a,[s,e])=>a+e-s,0);
-const calc=(x)=>x.tid?x.pkgPrice:Math.round(slices(allSegs(x)).reduce((a,s)=>a+s.ms/36e5*rate(x.ptype,s.h),0)/10)*10;
-const fmt=ms=>{ms=Math.max(0,Math.floor(ms/1000));const p=n=>String(n).padStart(2,'0');return p(Math.floor(ms/3600))+':'+p(Math.floor(ms/60)%60)+':'+p(ms%60)};
-const dt=t=>new Date(t).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-const place=i=>S.places.find(p=>p.id===i);
-const sorted=a=>[...a].sort((x,y)=>(x.ptype||x.type||'').localeCompare(y.ptype||y.type||'')||String(x.name).localeCompare(String(y.name),'ru',{numeric:true}));
-const col=n=>db.collection(n);
-const save=(n,i,d)=>col(n).doc(i).set(d);const upd=(n,i,d)=>col(n).doc(i).update(d);const del=(n,i)=>col(n).doc(i).delete();
-
+const r10=v=>Math.round(v/10)*10,priceOf=(pt,segs)=>r10(slices(segs).reduce((a,s)=>a+s.ms/36e5*rate(pt,s.h),0));
+function timeForSum(pt,sum){let t=Date.now(),rem=sum,ms=0;for(let i=0;i<500&&rem>0;i++){const d=new Date(t),nx=new Date(d);nx.setMinutes(0,0,0);nx.setHours(d.getHours()+1);const L=nx.getTime()-t,r=rate(pt,d.getHours());if(!r)return 0;const c=r*L/36e5;if(c>=rem){ms+=rem/r*36e5;break}rem-=c;ms+=L;t+=L}return ms}
+const allSegs=x=>[...(x.segs||[]),...(x.run?[[x.run,now]]:[])],dur=x=>allSegs(x).reduce((a,[s,e])=>a+e-s,0),fixed=x=>x.price!=null;
+const calc=x=>fixed(x)?x.price:priceOf(x.ptype,allSegs(x)),fmt=ms=>{ms=Math.max(0,Math.floor(ms/1000));return p2(Math.floor(ms/3600))+':'+p2(Math.floor(ms/60)%60)+':'+p2(ms%60)};
+const hm=t=>new Date(t).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}),dt=t=>new Date(t).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+const place=i=>S.places.find(p=>p.id===i),sortP=a=>[...a].sort((x,y)=>Object.keys(TY).indexOf(x.type)-Object.keys(TY).indexOf(y.type)||String(x.name).localeCompare(String(y.name),'ru',{numeric:true}));
+const col=n=>db.collection(n),save=(n,i,d)=>col(n).doc(i).set(d),upd=(n,i,d)=>col(n).doc(i).update(d),del=(n,i)=>col(n).doc(i).delete();
+const openShift=()=>S.shifts.find(s=>s.status==='open'),V=n=>$('#'+n)?.value;
+const sum=(a,f)=>a.reduce((x,y)=>x+f(y),0),inWin=(t,h)=>{const a=t.from??0,b=t.to??24;return a<=b?h>=a&&h<b:h>=a||h<b};
+const expected=sh=>sh.openCash+sum(S.sessions.filter(s=>s.status==='done'&&s.method==='cash'&&s.end>=sh.start),s=>s.amount||0)-sum(S.expenses.filter(e=>e.fromCash&&e.ts>=sh.start),e=>e.amount);
+function toast(m){const e=document.createElement('div');e.textContent=m;e.style.cssText='position:fixed;top:calc(12px + env(safe-area-inset-top,0));left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:14px;z-index:20;font-weight:600;max-width:90%';document.body.appendChild(e);e.animate([{opacity:0,transform:'translate(-50%,-12px)'},{opacity:1,transform:'translate(-50%,0)'}],{duration:260,easing:'cubic-bezier(.32,.72,0,1)'});setTimeout(()=>e.remove(),2800)}
+// ---- sheet (spring-like curve, same path in/out, drag to dismiss)
+const EZ='cubic-bezier(.32,.72,0,1)';
+function openSheet(h){const sh=$('#sheet'),was=sh.style.display==='block';sh.innerHTML='<div class="gr" id="gr"></div>'+h;sh.style.display='block';$('#scrim').style.display='block';if(!was){sh.animate([{transform:'translateY(100%)'},{transform:'none'}],{duration:380,easing:EZ});$('#scrim').animate([{opacity:0},{opacity:1}],{duration:300})}
+ const g=$('#gr');let y0=0,dy=0,v=0,lt=0,ly=0;g.onpointerdown=e=>{g.setPointerCapture(e.pointerId);y0=e.clientY;lt=e.timeStamp;ly=e.clientY;v=0};
+ g.onpointermove=e=>{if(!g.hasPointerCapture(e.pointerId))return;dy=e.clientY-y0;v=(e.clientY-ly)/Math.max(1,e.timeStamp-lt);lt=e.timeStamp;ly=e.clientY;sh.style.transform=`translateY(${dy>0?dy:dy*.2}px)`};
+ g.onpointerup=()=>{const proj=dy+v*1000*.998/(1-.998)/1000*0.12*1000;sh.style.transform='';if(dy>0&&(proj>sh.offsetHeight*.4||v>.6))closeSheet(dy);else if(dy)sh.animate([{transform:`translateY(${dy}px)`},{transform:'none'}],{duration:350,easing:EZ});dy=0}}
+function closeSheet(from=0){const sh=$('#sheet');if(sh.style.display!=='block')return;const a=sh.animate([{transform:`translateY(${from}px)`},{transform:'translateY(100%)'}],{duration:260,easing:EZ});$('#scrim').style.display='none';a.onfinish=()=>{sh.style.display='none'}}
+$('#scrim').onclick=()=>closeSheet();
+const ask=(q,ok)=>new Promise(r=>{window._ask=r;openSheet(`<b style="font-size:18px">${esc(q)}</b><div class="r"><button class="f" data-act="ask0">Нет</button><button class="f p" style="background:var(--er)" data-act="ask1">${ok}</button></div>`)});
+// ---- views
 function render(){
- $('#nav').innerHTML=[['live','Зал'],['stats','Статистика'],['log','Журнал'],['exp','Расходы'],['adm','Админ']].map(([k,l])=>`<button class="${tab===k?'on':''}" data-act="tab" data-v="${k}">${l}</button>`).join('');
- $('#m').innerHTML={live,stats,log,exp,adm}[tab]();
-}
+ $('#nav').innerHTML=[['live','▶︎','Зал'],['log','☰','Журнал'],['sh','◔','Смены'],['stats','▥','Статистика'],['adm','⚙︎','Настройки']].map(([k,i,l])=>`<button class="${tab===k?'on':''}" data-act="tab" data-v="${k}"><i>${i}</i>${l}</button>`).join('');
+ $('#m').innerHTML={live,log,sh:shifts,stats,adm}[tab]();dirty=false;tick()}
 function live(){
- if(!S.places.length)return '<div class="c">Мест пока нет. Откройте «Админ» и нажмите «Заполнить по умолчанию».</div>';
- return '<div class="grid">'+sorted(S.places.map(p=>({...p,ptype:p.type}))).map(p=>{
-  const a=S.sessions.find(s=>s.pid===p.id&&s.status==='active');
-  if(!a){const tf=S.tariffs.filter(t=>t.ptype===p.type);
-   return `<div class="c"><b>${esc(p.name)}</b> <span class="mu">${TY[p.type]}</span><div class="t mu">свободно</div>
-   <div class="row"><button class="p" data-act="start" data-p="${p.id}">Секундомер</button></div>
-   ${tf.length?`<div class="row"><select id="tf${p.id}">${tf.map(t=>`<option value="${t.id}">${esc(t.name)} · ${t.minutes} мин · ${money(t.price)}</option>`).join('')}</select><button data-act="pkg" data-p="${p.id}">Тариф</button></div>`:''}</div>`}
-  const el=dur(a),paused=!a.run,left=a.tid?a.minutes*6e4-el:null;
-  return `<div class="c" style="border-color:${paused?'var(--wa)':'var(--ok)'}"><b>${esc(p.name)}</b> <span class="mu">${TY[p.type]} · ${a.tid?esc(a.tname):'секундомер'}</span>
-  <div class="t ${left!==null&&left<0?'ov':paused?'pa':''}">${left!==null?(left<0?'+':'')+fmt(Math.abs(left)):fmt(el)}</div>
-  <div class="mu">${paused?'пауза · ':''}${left!==null?'прошло '+fmt(el)+' · ':''}${money(calc(a))}</div>
-  <div class="row"><button data-act="pause" data-s="${a.id}">${paused?'Продолжить':'Пауза'}</button><button class="p" data-act="stop" data-s="${a.id}">Стоп</button></div></div>`}).join('')+'</div>';
-}
-function range(){const d=new Date(P.d+'T00:00:00'),u=P.u;let s=new Date(d),e;
- if(u==='week'){s.setDate(d.getDate()-((d.getDay()+6)%7));e=new Date(s);e.setDate(s.getDate()+7)}
- else if(u==='month'){s=new Date(d.getFullYear(),d.getMonth(),1);e=new Date(d.getFullYear(),d.getMonth()+1,1)}
- else if(u==='year'){s=new Date(d.getFullYear(),0,1);e=new Date(d.getFullYear()+1,0,1)}
- else{e=new Date(s);e.setDate(s.getDate()+1)}return [s.getTime(),e.getTime()]}
-function stats(){
- const [rs,re]=range(),c=C(),dayH=c.to-c.from,nightH=24-dayH,days=Math.max(1,Math.ceil((Math.min(re,Date.now())-rs)/864e5));
- const ss=S.sessions.filter(x=>x.status==='done'&&x.segs.length&&x.segs[0][0]>=rs&&x.segs[0][0]<re);
- const bt={},byH=Array(24).fill(0),byW=Array(7).fill(0);let bd=0,bn=0,rev=0,net=0;
- for(const x of ss){rev+=x.amount||0;net+=(x.amount||0)-(x.fee||0);for(const sl of slices(x.segs)){const h=sl.ms/36e5;byH[sl.h]+=h;byW[(new Date(sl.t).getDay()+6)%7]+=h;(bt[x.ptype]=bt[x.ptype]||{d:0,n:0})[isNight(sl.h)?'n':'d']+=h;isNight(sl.h)?bn+=h:bd+=h}}
- const n=S.places.length,cnt=t=>S.places.filter(p=>p.type===t).length;
- const ex=S.expenses.filter(e=>e.ts>=rs&&e.ts<re).reduce((a,e)=>a+e.amount,0),pc=v=>(v*100).toFixed(1)+'%';
- const bar=(l,v,t)=>`<div class="br"><b>${l}</b><div class="bar"><i style="width:${Math.min(100,v*100)}%"></i></div><span>${pc(v)}</span></div>`;
- const wd=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],ne=n*days;
- return `<div class="row" style="margin:0 0 10px">${[['day','День'],['week','Неделя'],['month','Месяц'],['year','Год']].map(([k,l])=>`<button class="${P.u===k?'on':''}" data-act="pu" data-v="${k}">${l}</button>`).join('')}<input type="date" value="${P.d}" data-act="pd"></div>
- <div class="kg"><div class="c"><div class="mu">Загрузка (день)</div><div class="k">${pc(n?bd/(n*dayH*days):0)}</div></div>
- <div class="c"><div class="mu">Загрузка (ночь)</div><div class="k">${pc(n?bn/(n*nightH*days):0)}</div></div>
- <div class="c"><div class="mu">Загрузка (всего)</div><div class="k">${pc(n?(bd+bn)/(n*24*days):0)}</div></div>
- <div class="c"><div class="mu">Занято часов</div><div class="k">${(bd+bn).toFixed(1)}</div></div>
- <div class="c"><div class="mu">Выручка</div><div class="k">${money(rev)}</div></div>
- <div class="c"><div class="mu">Чистыми (−комиссия)</div><div class="k">${money(net)}</div></div>
- <div class="c"><div class="mu">Визитов / ср. чек</div><div class="k">${ss.length} / ${ss.length?money(rev/ss.length):'—'}</div></div>
- <div class="c"><div class="mu">Расходы / прибыль</div><div class="k">${money(ex)} / <span style="color:${net-ex<0?'var(--er)':'var(--ok)'}">${money(net-ex)}</span></div></div></div>
- <div class="c"><b>По типам мест</b> <span class="mu">день / ночь</span>${Object.keys(TY).filter(t=>cnt(t)).map(t=>bar(TY[t]+' д',(bt[t]?.d||0)/(cnt(t)*dayH*days),'')+bar(TY[t]+' н',(bt[t]?.n||0)/(cnt(t)*nightH*days),'')).join('')}</div>
- <div class="c"><b>По часам суток</b> <span class="mu">доля мест, занятых в этот час</span>${byH.map((v,h)=>bar(String(h).padStart(2,'0')+':00',n?v/(n*days):0,'')).join('')}</div>
- <div class="c"><b>По дням недели</b>${byW.map((v,i)=>{const wc=Math.max(1,countWd(rs,Math.min(re,Date.now()),i));return bar(wd[i],n?v/(n*24*wc):0,'')}).join('')}</div>
- <button data-act="csv">Экспорт CSV</button>`;
-}
-function countWd(a,b,w){let k=0;for(let t=a;t<b;t+=864e5)if((new Date(t).getDay()+6)%7===w)k++;return k}
+ const sh=openShift(),bar=sh?`<div class="c"><span class="dot"></span><b>Смена с ${hm(sh.start)}</b> · ${esc(sh.openBy)}<div class="mu">В кассе по боту: <b id="exp">${money(expected(sh))}</b></div><div class="r"><button class="f" data-act="shclose">Завершить смену</button></div></div>`:`<div class="c"><b>Смена не начата</b><div class="r"><button class="p f" data-act="shopen">Начать смену</button></div></div>`;
+ if(!S.places.length)return '<h1>Зал</h1>'+bar+'<div class="c">Мест нет. Откройте «Настройки» → «Заполнить по умолчанию».</div>';
+ return '<h1>Зал</h1>'+bar+'<div class="g">'+sortP(S.places).map(p=>{const a=S.sessions.find(s=>s.pid===p.id&&s.status==='active');
+  if(!a)return `<div class="c"><b>${esc(p.name)}</b> <span class="mu">${TY[p.type]}</span><div class="t mu">Свободно</div><div class="r"><button class="p f" data-act="open" data-p="${p.id}">Старт</button><button data-act="open" data-p="${p.id}" data-v="sum" aria-label="Калькулятор">🧮</button></div></div>`;
+  const pa=!a.run;return `<div class="c ${pa?'pa':''}"><b><span class="dot"></span>${esc(p.name)}</b> <span class="mu">${TY[p.type]} · ${esc(a.label||'')}</span><div class="t" data-tm="${a.id}"></div><div class="mu" data-pr="${a.id}"></div>
+  <div class="r"><button class="f" data-act="pause" data-s="${a.id}">${pa?'Продолжить':'Пауза'}</button><button class="p f" data-act="stop" data-s="${a.id}">Стоп</button></div><div class="r" style="margin-top:2px"><button class="s" data-act="cancel" data-s="${a.id}">Отменить сеанс</button></div></div>`}).join('')+'</div>'}
+function tick(){now=Date.now();for(const a of S.sessions.filter(s=>s.status==='active')){const el=document.querySelector(`[data-tm="${a.id}"]`),pr=document.querySelector(`[data-pr="${a.id}"]`),e=dur(a),left=fixed(a)&&a.minutes!=null?a.minutes*6e4-e:null;
+  if(el){el.textContent=left!==null?(left<0?'+':'')+fmt(Math.abs(left)):fmt(e);el.className='t'+(left!==null&&left<0?' ov':a.run?'':' mu')}
+  if(pr)pr.textContent=(a.run?'':'пауза · ')+(left!==null?'прошло '+fmt(e)+' · ':'')+money(calc(a));
+  if(left!==null&&left<=0&&a.run&&!warned[a.id]){warned[a.id]=1;toast('Время вышло: '+a.pname);try{navigator.vibrate(300)}catch(x){}}}
+ const sh=openShift(),x=$('#exp');if(sh&&x)x.textContent=money(expected(sh))}
+// ---- start sheet
+function startSheet(pid,t){SS={pid,tab:t||'watch',h:1,m:0,sum:'',tid:null};drawStart()}
+function drawStart(){const p=place(SS.pid),busy=i=>S.sessions.some(s=>s.pid===i&&s.status==='active'),tf=S.tariffs.filter(t=>t.ptype===p.type&&inWin(t,new Date().getHours())),r=rate(p.type,new Date().getHours());
+ const body={watch:`<div class="mu" style="padding:12px 0">Время идёт вверх, оплата по часам: <b>${money(r)}/ч</b></div>`,
+ timer:`<div class="r">${[.5,1,1.5,2,3].map(h=>`<button data-act="chip" data-v="${h*60}">${h} ч</button>`).join('')}</div><div class="r">Часы <input id="th" type="number" min="0" value="${SS.h}" style="width:80px" data-in="1"> Мин <input id="tm" type="number" min="0" value="${SS.m}" style="width:80px" data-in="1"></div><div id="res" style="margin-top:10px"></div>`,
+ tariff:tf.length?tf.map(t=>`<div class="li"><span>${esc(t.name)}<div class="mu">${t.minutes} мин${t.from!=null?` · ${t.from}–${t.to} ч`:''}</div></div><button class="${SS.tid===t.id?'on':''}" data-act="pick" data-v="${t.id}">${money(t.price)}</button></div>`).join(''):'<div class="mu" style="padding:12px 0">Сейчас нет доступных тарифов для этого места</div>',
+ sum:`<div class="r"><input id="sm" type="number" inputmode="numeric" placeholder="Сумма, ֏" value="${SS.sum}" style="flex:1;font-size:22px" data-in="1"></div><div id="res" class="mu" style="margin-top:10px"></div>`}[SS.tab];
+ openSheet(`<b style="font-size:20px">Старт</b><div class="r"><select id="dv" data-act="dev" style="flex:1">${sortP(S.places).map(q=>`<option value="${q.id}" ${q.id===SS.pid?'selected':''} ${busy(q.id)?'disabled':''}>${esc(q.name)} (${TY[q.type]})${busy(q.id)?' · занято':''}</option>`).join('')}</select></div>
+ <div class="sg" style="margin-top:10px">${[['watch','Секундомер'],['timer','Таймер'],['tariff','Тариф'],['sum','На сумму']].map(([k,l])=>`<button class="${SS.tab===k?'on':''}" data-act="sstab" data-v="${k}">${l}</button>`).join('')}</div>${body}<div class="r"><button class="p f" data-act="sgo">Старт</button></div>`);upRes()}
+function upRes(){const e=$('#res');if(!e)return;const p=place(SS.pid);if(SS.tab==='timer'){SS.h=+V('th')||0;SS.m=+V('tm')||0;const m=SS.h*60+SS.m;e.innerHTML=m?`Итого: <b>${money(priceOf(p.type,[[Date.now(),Date.now()+m*6e4]]))}</b> · до ${hm(Date.now()+m*6e4)}`:''}
+ else if(SS.tab==='sum'){SS.sum=V('sm');const s=+SS.sum;e.innerHTML=s>0?`<div style="font-size:22px;font-weight:600;color:var(--tx)">≈ ${fmtMin(timeForSum(p.type,s))}</div>до ${hm(Date.now()+timeForSum(p.type,s))} · ставка ${money(rate(p.type,new Date().getHours()))}/ч`:''}}
+const fmtMin=ms=>{const m=Math.floor(ms/6e4);return m>=60?Math.floor(m/60)+' ч '+p2(m%60)+' мин':m+' мин'};
+async function sgo(){const p=place(SS.pid);if(S.sessions.some(s=>s.pid===p.id&&s.status==='active'))return toast('Место занято');let x={pid:p.id,pname:p.name,ptype:p.type,segs:[],run:Date.now(),status:'active'};
+ if(SS.tab==='watch')x={...x,mode:'watch',label:'секундомер'};
+ else if(SS.tab==='timer'){const m=SS.h*60+SS.m;if(!m)return toast('Укажите время');x={...x,mode:'timer',label:'таймер',minutes:m,price:priceOf(p.type,[[Date.now(),Date.now()+m*6e4]])}}
+ else if(SS.tab==='tariff'){const t=S.tariffs.find(q=>q.id===SS.tid);if(!t)return toast('Выберите тариф');x={...x,mode:'tariff',label:t.name,minutes:t.minutes,price:t.price}}
+ else{const s=+SS.sum;if(!(s>0))return toast('Введите сумму');x={...x,mode:'sum',label:'на сумму',minutes:timeForSum(p.type,s)/6e4,price:s}}
+ await save('sessions',id(),x);closeSheet()}
+// ---- stop / cancel
+function stopSheet(s){const x=S.sessions.find(q=>q.id===s);ST={s,m:'cash'};openSheet(`<b style="font-size:20px">${esc(x.pname)} · ${fmt(dur(x))}</b><div class="r"><input id="am" type="number" inputmode="numeric" value="${calc(x)}" style="flex:1;font-size:22px"></div><div class="sg" style="margin-top:10px"><button class="on" data-act="pm" data-v="cash">Наличные</button><button data-act="pm" data-v="card">Карта (−${C().fee}%)</button></div><div class="r"><button class="p f" data-act="fin">Завершить</button></div>`)}
+// ---- journal
 function log(){
- const list=[...S.sessions].filter(s=>s.status==='done').sort((a,b)=>b.segs[0][0]-a.segs[0][0]).slice(0,100);
- return `<div class="c"><b>Добавить сессию вручную</b><div class="row">
- <select id="mp">${sorted(S.places.map(p=>({...p,ptype:p.type}))).map(p=>`<option value="${p.id}">${esc(p.name)} (${TY[p.type]})</option>`).join('')}</select>
- <input id="ms" type="datetime-local"><input id="mm" type="number" placeholder="минут" style="width:90px"><input id="ma" type="number" placeholder="сумма (авто)" style="width:120px">
- <select id="mt"><option value="cash">Наличные</option><option value="card">Карта</option></select><button class="p" data-act="manual">Добавить</button></div></div>
- <div class="sc"><table><tr><th>Начало</th><th>Место</th><th>Время</th><th>Сумма</th><th>Оплата</th><th></th></tr>${list.map(s=>`<tr><td>${dt(s.segs[0][0])}</td><td>${esc(s.pname)}</td><td>${fmt(s.segs.reduce((a,[x,y])=>a+y-x,0)).slice(0,5)}</td><td>${money(s.amount||0)}</td><td>${s.method==='card'?'карта':'нал.'}</td><td><button class="d" data-act="dels" data-s="${s.id}">✕</button></td></tr>`).join('')}</table></div>`;
-}
-function exp(){
- const l=[...S.expenses].sort((a,b)=>b.ts-a.ts);
- return `<div class="c"><b>Добавить расход</b><div class="row"><input id="en" placeholder="Аренда, интернет…"><input id="ea" type="number" placeholder="сумма" style="width:110px"><input id="ed" type="date" value="${new Date().toISOString().slice(0,10)}"><button class="p" data-act="addexp">Добавить</button></div></div>
- <div class="sc"><table>${l.map(e=>`<tr><td>${new Date(e.ts).toLocaleDateString('ru-RU')}</td><td>${esc(e.name)}</td><td>${money(e.amount)}</td><td><button class="d" data-act="delexp" data-s="${e.id}">✕</button></td></tr>`).join('')}</table></div>`;
-}
-function adm(){
- const c=C();
- return `<div class="c"><b>Места</b>${S.places.length?'':'<div class="row"><button class="p" data-act="seed">Заполнить по умолчанию (5 ПК, 2 PS5, 2 VIP)</button></div>'}
- ${sorted(S.places.map(p=>({...p,ptype:p.type}))).map(p=>`<div class="row"><input value="${esc(p.name)}" data-act="rn" data-s="${p.id}"><select data-act="rt" data-s="${p.id}">${Object.keys(TY).map(t=>`<option value="${t}" ${p.type===t?'selected':''}>${TY[t]}</option>`).join('')}</select><button class="d" data-act="delp" data-s="${p.id}">✕</button></div>`).join('')}
- <div class="row"><input id="pn" placeholder="Название (ПК 6)"><select id="pt">${Object.keys(TY).map(t=>`<option value="${t}">${TY[t]}</option>`).join('')}</select><button class="p" data-act="addp">Добавить место</button></div></div>
- <div class="c"><b>Почасовые цены (секундомер)</b>${Object.keys(TY).map(t=>`<div class="row"><span style="width:70px">${TY[t]}</span>день <input type="number" style="width:90px" value="${c.rates[t].d}" data-act="rate" data-t="${t}" data-k="d">ночь <input type="number" style="width:90px" value="${c.rates[t].n}" data-act="rate" data-t="${t}" data-k="n"></div>`).join('')}
- <div class="row">День с <input type="number" style="width:70px" value="${c.from}" data-act="cfg" data-k="from"> до <input type="number" style="width:70px" value="${c.to}" data-act="cfg" data-k="to"> ч. Комиссия карты % <input type="number" step="0.1" style="width:80px" value="${c.fee}" data-act="cfg" data-k="fee"></div></div>
- <div class="c"><b>Тарифы (пакеты с таймером)</b>${S.tariffs.map(t=>`<div class="row">${esc(t.name)} · ${TY[t.ptype]} · ${t.minutes} мин · ${money(t.price)} <button class="d" data-act="delt" data-s="${t.id}">✕</button></div>`).join('')}
- <div class="row"><input id="tn" placeholder="Название"><select id="tp">${Object.keys(TY).map(t=>`<option value="${t}">${TY[t]}</option>`).join('')}</select><input id="tm" type="number" placeholder="минут" style="width:90px"><input id="tc" type="number" placeholder="цена" style="width:90px"><button class="p" data-act="addt">Добавить тариф</button></div></div>`;
-}
-function stopDlg(s){const x=S.sessions.find(q=>q.id===s);if(x.run){now=Date.now()}
- const d=$('#dlg');d.innerHTML=`<b>${esc(x.pname)}: ${fmt(dur(x))}</b><div class="row">Сумма <input id="da" type="number" value="${calc(x)}" style="width:110px"></div><div class="row"><select id="dm"><option value="cash">Наличные</option><option value="card">Карта</option></select></div><div class="row"><button class="p" data-act="fin" data-s="${s}">Завершить</button><button data-act="cl">Отмена</button></div>`;d.showModal()}
-async function csv(){const r=['Начало,Конец,Место,Тип,Режим,Минут,Сумма,Оплата,Комиссия'];
- for(const s of S.sessions.filter(q=>q.status==='done'))r.push([new Date(s.segs[0][0]).toISOString(),new Date(s.end).toISOString(),s.pname,TY[s.ptype],s.tid?s.tname:'секундомер',Math.round(s.segs.reduce((a,[x,y])=>a+y-x,0)/6e4),s.amount||0,s.method,(s.fee||0).toFixed(1)].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+ const sw=`<div class="sg"><button class="${sub==='s'?'on':''}" data-act="sub" data-v="s">Сессии</button><button class="${sub==='e'?'on':''}" data-act="sub" data-v="e">Расходы</button></div>`;
+ if(sub==='e'){const l=[...S.expenses].sort((a,b)=>b.ts-a.ts);return `<h1>Журнал</h1>${sw}<div class="c" style="margin-top:12px"><div class="r" style="margin:0"><input id="en" placeholder="Аренда, интернет…" style="flex:1"><input id="ea" type="number" placeholder="Сумма" style="width:100px"></div><div class="r"><input id="ed" type="date" value="${today()}"><label class="mu"><input id="ec" type="checkbox" style="min-height:0"> из кассы</label><button class="p f" data-act="addexp">Добавить</button></div></div><div class="c">${l.map(e=>`<div class="li"><span>${esc(e.name)}<div class="mu">${new Date(e.ts).toLocaleDateString('ru-RU')}${e.fromCash?' · из кассы':''}</div></span><span>${money(e.amount)} <button class="s" data-act="delexp" data-s="${e.id}">✕</button></span></div>`).join('')||'<span class="mu">Пусто</span>'}</div>`}
+ const [a,b]=dayRange(J),l=S.sessions.filter(s=>(s.status==='done'||s.status==='cancelled')&&s.segs.length&&s.segs[0][0]>=a&&s.segs[0][0]<b).sort((x,y)=>y.segs[0][0]-x.segs[0][0]),tot=sum(l.filter(s=>s.status==='done'),s=>s.amount||0);
+ return `<h1>Журнал</h1>${sw}<div class="r"><button data-act="jd" data-v="-1">‹</button><input type="date" id="jdt" value="${J}" data-act="jdt" style="flex:1;text-align:center"><button data-act="jd" data-v="1">›</button></div>
+ <div class="r"><span class="mu f">Итого за день: <b style="color:var(--tx)">${money(tot)}</b></span><button data-act="mopen">＋ Вручную</button></div><div class="c" style="margin-top:10px">${l.map(s=>{const d=sum(s.segs,q=>q[1]-q[0]),c=s.status==='cancelled';return `<div class="li" style="${c?'opacity:.6':''}"><span>${hm(s.segs[0][0])} · ${esc(s.pname)}<div class="mu">${esc(s.label||'')} · ${fmt(d).slice(0,5)}${c?' · <span style="color:var(--er)">отменена</span>':' · '+(s.method==='card'?'карта':'нал.')}</div></span><span>${c?'—':money(s.amount||0)} <button class="s" data-act="dels" data-s="${s.id}">✕</button></span></div>`}).join('')||'<span class="mu">Нет сессий за этот день</span>'}</div>`}
+function dayRange(d){const s=new Date(d+'T00:00:00'),e=new Date(s);e.setDate(s.getDate()+1);return [s.getTime(),e.getTime()]}
+function manualSheet(){openSheet(`<b style="font-size:20px">Сессия вручную</b><div class="r"><select id="mp" style="flex:1">${sortP(S.places).map(p=>`<option value="${p.id}">${esc(p.name)} (${TY[p.type]})</option>`).join('')}</select></div><div class="r"><input id="ms" type="datetime-local" value="${localDT(Date.now())}" style="flex:1"><input id="mm" type="number" placeholder="Минут" style="width:90px"></div><div class="r"><input id="ma" type="number" placeholder="Сумма (авто)" style="flex:1"><select id="mt"><option value="cash">Нал.</option><option value="card">Карта</option></select></div><div class="r"><button class="p f" data-act="mgo">Добавить</button></div>`)}
+// ---- shifts
+function shifts(){const sh=openShift(),l=S.shifts.filter(s=>s.status==='closed').sort((a,b)=>b.start-a.start);
+ return `<h1>Смены</h1>${sh?`<div class="c"><b>Идёт смена</b> с ${dt(sh.start)} · ${esc(sh.openBy)}<div class="mu">Касса на старте ${money(sh.openCash)} · сейчас по боту ${money(expected(sh))}</div><div class="r"><button class="f" data-act="shclose">Завершить смену</button></div></div>`:`<div class="c"><div class="r" style="margin:0"><button class="p f" data-act="shopen">Начать смену</button></div></div>`}
+ <h3>История</h3>${l.map(s=>{const bd=s.diff===0?`<span class="bd" style="color:var(--ok)">Касса сошлась</span>`:s.diff<0?`<span class="bd" style="color:var(--er)">Не хватает ${money(-s.diff)}</span>`:`<span class="bd" style="color:var(--wa)">Излишек ${money(s.diff)}</span>`;
+ return `<div class="c"><b>${dt(s.start)} → ${hm(s.end)}</b> ${bd}<div class="mu" style="margin-top:6px">Открыл: ${esc(s.openBy)} · закрыл: ${esc(s.closeBy)}</div><div class="k" style="margin:10px 0 0"><div><span class="mu">Загрузка</span><b>${(s.load*100).toFixed(1)}%</b></div><div><span class="mu">Прибыль</span><b style="color:${s.profit<0?'var(--er)':'var(--ok)'}">${money(s.profit)}</b></div><div><span class="mu">Выручка</span><b>${money(s.revenue)}</b></div><div><span class="mu">Касса: ожид. / факт</span><b style="font-size:16px">${money(s.expected)} / ${money(s.actual)}</b></div></div></div>`}).join('')||'<div class="c mu">Пока нет закрытых смен</div>'}`}
+const staffSel=id_=>`<select id="${id_}" style="flex:1">${(C().staff||[]).map(n=>`<option>${esc(n)}</option>`).join('')}</select>`;
+function shopenSheet(){openSheet(`<b style="font-size:20px">Начать смену</b><div class="r">${staffSel('who')}</div><div class="r"><input id="cash" type="number" inputmode="numeric" placeholder="Денег в кассе, ֏" style="flex:1;font-size:20px"></div><div class="r"><button class="p f" data-act="shgo">Начать</button></div>`)}
+function shcloseSheet(){const sh=openShift();SC={ok:true,conf:false,actual:null};drawClose(sh)}
+function drawClose(sh){const ex=expected(sh);openSheet(`<b style="font-size:20px">Завершить смену</b><div class="r">${staffSel('who')}</div><div class="c" style="background:var(--fl);margin-top:10px">В кассе по боту: <b>${money(ex)}</b></div>
+ <label class="r" style="gap:10px"><input type="checkbox" id="okc" ${SC.ok?'checked':''} data-act="okc" style="width:24px;height:24px;min-height:0"> Деньги в кассе сошлись</label>
+ ${SC.ok?'':`<div class="r"><input id="act" type="number" inputmode="numeric" placeholder="Сколько по факту, ֏" value="${SC.actual??''}" style="flex:1"><button data-act="actc">Подтвердить</button></div>${SC.conf?`<div style="margin-top:10px;font-weight:600;color:${SC.actual<ex?'var(--er)':'var(--wa)'}">${SC.actual<ex?'Не хватает '+money(ex-SC.actual):SC.actual>ex?'Излишек '+money(SC.actual-ex):'Касса сошлась'}</div>`:''}`}
+ <div class="r"><button class="p f" data-act="shfin" ${(!SC.ok&&!SC.conf)?'disabled style="opacity:.4"':''}>Завершить смену</button></div>`)}
+async function shfin(){const sh=openShift(),ex=expected(sh),actual=SC.ok?ex:SC.actual,end=Date.now(),who=V('who');
+ const ss=S.sessions.filter(s=>s.status==='done'&&s.end>=sh.start),rev=sum(ss,s=>s.amount||0),net=rev-sum(ss,s=>s.fee||0),exp=sum(S.expenses.filter(e=>e.ts>=sh.start),e=>e.amount);
+ const busy=sum(S.sessions.filter(s=>s.status==='done'),s=>sum(slices(s.segs.map(([a,b])=>[Math.max(a,sh.start),Math.min(b,end)]).filter(([a,b])=>b>a)),q=>q.ms))/36e5,cap=S.places.length*(end-sh.start)/36e5;
+ await upd('shifts',sh.id,{status:'closed',end,closeBy:who,expected:ex,actual,diff:actual-ex,revenue:rev,net,expenses:exp,profit:net-exp,load:cap?busy/cap:0});closeSheet();toast('Смена завершена')}
+// ---- stats
+function range(){const d=new Date(P.d+'T00:00:00');let s=new Date(d),e;if(P.u==='week'){s.setDate(d.getDate()-((d.getDay()+6)%7));e=new Date(s);e.setDate(s.getDate()+7)}else if(P.u==='month'){s=new Date(d.getFullYear(),d.getMonth(),1);e=new Date(d.getFullYear(),d.getMonth()+1,1)}else if(P.u==='year'){s=new Date(d.getFullYear(),0,1);e=new Date(d.getFullYear()+1,0,1)}else{e=new Date(s);e.setDate(s.getDate()+1)}return [s.getTime(),e.getTime()]}
+function stats(){const [rs,re]=range(),c=C(),dayH=c.to-c.from,nightH=24-dayH,days=Math.max(1,Math.ceil((Math.min(re,Date.now())-rs)/864e5));
+ const ss=S.sessions.filter(x=>x.status==='done'&&x.segs.length&&x.segs[0][0]>=rs&&x.segs[0][0]<re),bt={},byH=Array(24).fill(0),byW=Array(7).fill(0);let bd=0,bn=0;
+ for(const x of ss)for(const sl of slices(x.segs)){const h=sl.ms/36e5;byH[sl.h]+=h;byW[(new Date(sl.t).getDay()+6)%7]+=h;(bt[x.ptype]=bt[x.ptype]||{d:0,n:0})[isNight(sl.h)?'n':'d']+=h;isNight(sl.h)?bn+=h:bd+=h}
+ const rev=sum(ss,x=>x.amount||0),net=rev-sum(ss,x=>x.fee||0),n=S.places.length,cnt=t=>S.places.filter(p=>p.type===t).length,ex=sum(S.expenses.filter(e=>e.ts>=rs&&e.ts<re),e=>e.amount),pc=v=>(v*100).toFixed(1)+'%';
+ const bar=(l,v)=>`<div class="br"><u>${l}</u><div><i style="width:${Math.min(100,v*100)}%"></i></div><span>${pc(v)}</span></div>`,wd=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+ return `<h1>Статистика</h1><div class="sg">${[['day','День'],['week','Неделя'],['month','Месяц'],['year','Год']].map(([k,l])=>`<button class="${P.u===k?'on':''}" data-act="pu" data-v="${k}">${l}</button>`).join('')}</div><div class="r"><input type="date" value="${P.d}" data-act="pd" style="flex:1;text-align:center"></div>
+ <div class="k" style="margin-top:12px"><div class="c"><span class="mu">Загрузка · день</span><b>${pc(n?bd/(n*dayH*days):0)}</b></div><div class="c"><span class="mu">Загрузка · ночь</span><b>${pc(n?bn/(n*nightH*days):0)}</b></div><div class="c"><span class="mu">Загрузка · всего</span><b>${pc(n?(bd+bn)/(n*24*days):0)}</b></div><div class="c"><span class="mu">Занято часов</span><b>${(bd+bn).toFixed(1)}</b></div>
+ <div class="c"><span class="mu">Выручка</span><b>${money(rev)}</b></div><div class="c"><span class="mu">Чистыми</span><b>${money(net)}</b></div><div class="c"><span class="mu">Визитов · ср. чек</span><b>${ss.length} · ${ss.length?money(rev/ss.length):'—'}</b></div><div class="c"><span class="mu">Расходы · прибыль</span><b style="font-size:18px">${money(ex)} · <span style="color:${net-ex<0?'var(--er)':'var(--ok)'}">${money(net-ex)}</span></b></div></div>
+ <h3>По типам</h3><div class="c">${Object.keys(TY).filter(t=>cnt(t)).map(t=>bar(TY[t]+' д',(bt[t]?.d||0)/(cnt(t)*dayH*days))+bar(TY[t]+' н',(bt[t]?.n||0)/(cnt(t)*nightH*days))).join('')}</div>
+ <h3>По часам</h3><div class="c">${byH.map((v,h)=>bar(p2(h)+':00',n?v/(n*days):0)).join('')}</div>
+ <h3>По дням недели</h3><div class="c">${byW.map((v,i)=>{let k=0;for(let t=rs;t<Math.min(re,Date.now());t+=864e5)if((new Date(t).getDay()+6)%7===i)k++;return bar(wd[i],n?v/(n*24*Math.max(1,k)):0)}).join('')}</div><button data-act="csv" style="width:100%">Экспорт CSV</button>`}
+// ---- admin
+function adm(){const c=C(),opts=sel=>Object.keys(TY).map(t=>`<option value="${t}" ${sel===t?'selected':''}>${TY[t]}</option>`).join('');
+ return `<h1>Настройки</h1><h3>Места</h3><div class="c">${S.places.length?'':'<button class="p" data-act="seed" style="width:100%">Заполнить по умолчанию</button>'}${sortP(S.places).map(p=>`<div class="r" style="margin:4px 0"><input value="${esc(p.name)}" data-act="rn" data-s="${p.id}" style="flex:1"><select data-act="rt" data-s="${p.id}">${opts(p.type)}</select><button class="s" data-act="delp" data-s="${p.id}">✕</button></div>`).join('')}
+ <div class="r"><input id="pn" placeholder="Новое место" style="flex:1"><select id="pt">${opts()}</select><button class="p" data-act="addp">＋</button></div></div>
+ <h3>Почасовые цены</h3><div class="c">${Object.keys(TY).map(t=>`<div class="r" style="margin:4px 0"><b style="width:72px">${TY[t]}</b>день <input type="number" style="width:84px" value="${c.rates[t].d}" data-act="rate" data-t="${t}" data-k="d"> ночь <input type="number" style="width:84px" value="${c.rates[t].n}" data-act="rate" data-t="${t}" data-k="n"></div>`).join('')}
+ <div class="r">День с <input type="number" style="width:64px" value="${c.from}" data-act="cfg" data-k="from"> до <input type="number" style="width:64px" value="${c.to}" data-act="cfg" data-k="to"> ч</div><div class="r">Комиссия карты % <input type="number" step=".1" style="width:80px" value="${c.fee}" data-act="cfg" data-k="fee"></div><div class="r">Сотрудники <input value="${esc((c.staff||[]).join(', '))}" data-act="staff" style="flex:1"></div></div>
+ <h3>Тарифы</h3><div class="c">${S.tariffs.map(t=>`<div class="li"><span>${esc(t.name)}<div class="mu">${TY[t.ptype]} · ${t.minutes} мин · ${money(t.price)}${t.from!=null?` · ${t.from}–${t.to} ч`:''}</div></span><button class="s" data-act="delt" data-s="${t.id}">✕</button></div>`).join('')}
+ <div class="r"><input id="tn" placeholder="Название" style="flex:1"><select id="tp">${opts()}</select></div><div class="r"><input id="tm" type="number" placeholder="Минут" style="width:84px"><input id="tc" type="number" placeholder="Цена" style="width:84px"><span class="mu">с</span><input id="tf" type="number" min="0" max="24" placeholder="0" style="width:60px"><span class="mu">до</span><input id="tt" type="number" min="0" max="24" placeholder="24" style="width:60px"></div><div class="r"><button class="p f" data-act="addt">Добавить тариф</button></div></div>`}
+async function csv(){const r=['Начало,Конец,Место,Тип,Режим,Статус,Минут,Сумма,Оплата,Комиссия'];for(const s of S.sessions.filter(q=>q.status==='done'||q.status==='cancelled'))r.push([new Date(s.segs[0]?.[0]||0).toISOString(),new Date(s.end).toISOString(),s.pname,TY[s.ptype],s.label,s.status,Math.round(sum(s.segs,q=>q[1]-q[0])/6e4),s.amount||0,s.method||'',(s.fee||0).toFixed(1)].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+r.join('\n')],{type:'text/csv'}));a.download='sessions.csv';a.click()}
-
-document.addEventListener('click',async e=>{const b=e.target.closest('[data-act]');if(!b||b.tagName==='INPUT'||(b.tagName==='SELECT'))return;
- const a=b.dataset.act,s=b.dataset.s,v=n=>$('#'+n)?.value;now=Date.now();
+// ---- events
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-act]');if(!b||b.tagName==='INPUT'||b.tagName==='SELECT')return;const a=b.dataset.act,s=b.dataset.s,v=b.dataset.v;now=Date.now();
  try{
- if(a==='tab'){tab=b.dataset.v;render()}
- else if(a==='pu'){P.u=b.dataset.v;render()}
- else if(a==='csv')csv();
- else if(a==='cl')$('#dlg').close();
- else if(a==='start'){const p=place(b.dataset.p);await save('sessions',id(),{pid:p.id,pname:p.name,ptype:p.type,tid:null,segs:[],run:now,status:'active'})}
- else if(a==='pkg'){const p=place(b.dataset.p),t=S.tariffs.find(q=>q.id===v('tf'+p.id));if(t)await save('sessions',id(),{pid:p.id,pname:p.name,ptype:p.type,tid:t.id,tname:t.name,minutes:t.minutes,pkgPrice:t.price,segs:[],run:now,status:'active'})}
+ if(a==='tab'){tab=v;render()}else if(a==='sub'){sub=v;render()}else if(a==='pu'){P.u=v;render()}else if(a==='csv')csv();
+ else if(a==='jd'){const d=new Date(J+'T12:00:00');d.setDate(d.getDate()+ +v);J=d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());render()}
+ else if(a==='ask0'){closeSheet();window._ask(false)}else if(a==='ask1'){closeSheet();window._ask(true)}
+ else if(a==='open')startSheet(b.dataset.p,v);else if(a==='sstab'){SS.tab=v;drawStart()}else if(a==='chip'){SS.h=Math.floor(v/60);SS.m=v%60;drawStart()}else if(a==='pick'){SS.tid=v;drawStart()}else if(a==='sgo')sgo();
  else if(a==='pause'){const x=S.sessions.find(q=>q.id===s);await upd('sessions',s,x.run?{segs:[...x.segs,[x.run,now]],run:null}:{run:now})}
- else if(a==='stop')stopDlg(s);
- else if(a==='fin'){const x=S.sessions.find(q=>q.id===s),m=v('dm'),am=+v('da')||0,segs=x.run?[...x.segs,[x.run,now]]:x.segs;
-  await upd('sessions',s,{segs,run:null,status:'done',end:now,amount:am,method:m,fee:m==='card'?am*C().fee/100:0});$('#dlg').close()}
- else if(a==='manual'){const p=place(v('mp')),st=new Date(v('ms')).getTime(),mn=+v('mm');if(!p||!st||!mn)return alert('Укажите место, начало и минуты');
-  const segs=[[st,st+mn*6e4]],x={ptype:p.type,segs,tid:null};const am=v('ma')!==''?+v('ma'):(now=st+mn*6e4,calc(x)),m=v('mt');
-  await save('sessions',id(),{pid:p.id,pname:p.name,ptype:p.type,tid:null,segs,run:null,status:'done',end:segs[0][1],amount:am,method:m,fee:m==='card'?am*C().fee/100:0})}
- else if(a==='dels'){if(confirm('Удалить сессию?'))await del('sessions',s)}
- else if(a==='addexp'){if(v('en')&&+v('ea'))await save('expenses',id(),{name:v('en'),amount:+v('ea'),ts:new Date(v('ed')+'T12:00:00').getTime()})}
+ else if(a==='stop')stopSheet(s);else if(a==='pm'){ST.m=v;document.querySelectorAll('[data-act=pm]').forEach(q=>q.classList.toggle('on',q.dataset.v===v))}
+ else if(a==='fin'){const x=S.sessions.find(q=>q.id===ST.s),am=+V('am')||0,sh=openShift();await upd('sessions',ST.s,{segs:x.run?[...x.segs,[x.run,now]]:x.segs,run:null,status:'done',end:now,amount:am,method:ST.m,fee:ST.m==='card'?am*C().fee/100:0,shiftId:sh?.id||null});closeSheet()}
+ else if(a==='cancel'){if(await ask('Точно ли вы хотите отменить сеанс?','Отменить сеанс')){const x=S.sessions.find(q=>q.id===s);if(x&&x.status==='active')await upd('sessions',s,{segs:x.run?[...x.segs,[x.run,now]]:x.segs,run:null,status:'cancelled',end:now});toast('Сеанс отменён')}}
+ else if(a==='mopen')manualSheet();
+ else if(a==='mgo'){const p=place(V('mp')),st=new Date(V('ms')).getTime(),mn=+V('mm');if(!p||!st||!mn)return toast('Укажите место, начало и минуты');const segs=[[st,st+mn*6e4]],am=V('ma')!==''?+V('ma'):priceOf(p.type,segs),m=V('mt');
+  await save('sessions',id(),{pid:p.id,pname:p.name,ptype:p.type,label:'вручную',segs,run:null,status:'done',end:segs[0][1],amount:am,method:m,fee:m==='card'?am*C().fee/100:0});closeSheet()}
+ else if(a==='dels'){if(await ask('Удалить запись?','Удалить'))await del('sessions',s)}
+ else if(a==='shopen')shopenSheet();
+ else if(a==='shgo'){if(V('cash')==='')return toast('Введите сумму в кассе');await save('shifts',id(),{status:'open',start:now,openCash:+V('cash'),openBy:V('who')});closeSheet()}
+ else if(a==='shclose'){if(S.sessions.some(x=>x.status==='active')&&!await ask('Есть активные сессии. Всё равно завершить смену?','Продолжить'))return;shcloseSheet()}
+ else if(a==='actc'){if(V('act')==='')return toast('Введите сумму');SC.actual=+V('act');SC.conf=true;drawClose(openShift())}
+ else if(a==='shfin')shfin();
+ else if(a==='addexp'){if(V('en')&&+V('ea')){const d=V('ed')||today();await save('expenses',id(),{name:V('en'),amount:+V('ea'),ts:d===today()?now:new Date(d+'T12:00:00').getTime(),fromCash:$('#ec').checked})}}
  else if(a==='delexp')await del('expenses',s);
- else if(a==='addp'){if(v('pn'))await save('places',id(),{name:v('pn'),type:v('pt')})}
- else if(a==='delp'){if(confirm('Удалить место? История сессий сохранится.'))await del('places',s)}
- else if(a==='addt'){if(v('tn')&&+v('tm')&&+v('tc'))await save('tariffs',id(),{name:v('tn'),ptype:v('tp'),minutes:+v('tm'),price:+v('tc')})}
+ else if(a==='addp'){if(V('pn'))await save('places',id(),{name:V('pn'),type:V('pt')})}
+ else if(a==='delp'){if(await ask('Удалить место?','Удалить'))await del('places',s)}
+ else if(a==='addt'){if(V('tn')&&+V('tm')&&+V('tc'))await save('tariffs',id(),{name:V('tn'),ptype:V('tp'),minutes:+V('tm'),price:+V('tc'),from:V('tf')===''?null:+V('tf'),to:V('tt')===''?null:+V('tt')})}
  else if(a==='delt')await del('tariffs',s);
- else if(a==='seed'){const l=[['ПК',5,'PC'],['PS5',2,'PS5'],['PS5 VIP',2,'VIP']];for(const [n,k,t] of l)for(let i=1;i<=k;i++)await save('places',id(),{name:n+' '+i,type:t});await save('cfg','main',DEF)}
- }catch(err){alert('Ошибка: '+(err.message||err.code))}});
+ else if(a==='seed'){for(const [n,k,t] of [['ПК',5,'PC'],['PS5',2,'PS5'],['PS5 VIP',2,'VIP']])for(let i=1;i<=k;i++)await save('places',id(),{name:n+' '+i,type:t});await save('cfg','main',DEF)}
+ }catch(err){toast('Ошибка: '+(err.message||err.code))}});
 document.addEventListener('change',async e=>{const b=e.target,a=b.dataset?.act;if(!a)return;
- try{if(a==='pd'){P.d=b.value;render()}
- else if(a==='rn')await upd('places',b.dataset.s,{name:b.value});
- else if(a==='rt')await upd('places',b.dataset.s,{type:b.value});
+ try{if(a==='pd'){P.d=b.value||today();render()}else if(a==='jdt'){J=b.value||today();render()}
+ else if(a==='dev'){SS.pid=b.value;SS.tid=null;drawStart()}
+ else if(a==='okc'){SC.ok=b.checked;SC.conf=false;drawClose(openShift())}
+ else if(a==='rn')await upd('places',b.dataset.s,{name:b.value});else if(a==='rt')await upd('places',b.dataset.s,{type:b.value});
  else if(a==='rate'){const c=C();c.rates[b.dataset.t][b.dataset.k]=+b.value;await save('cfg','main',c)}
- else if(a==='cfg'){const c=C();c[b.dataset.k]=+b.value;await save('cfg','main',c)}}catch(err){alert('Ошибка: '+(err.message||err.code))}});
+ else if(a==='cfg'){const c=C();c[b.dataset.k]=+b.value;await save('cfg','main',c)}
+ else if(a==='staff'){const c=C();c.staff=b.value.split(',').map(x=>x.trim()).filter(Boolean);await save('cfg','main',c)}}catch(err){toast('Ошибка: '+(err.message||err.code))}});
+document.addEventListener('input',e=>{if(e.target.dataset?.in)upRes()});
+document.addEventListener('focusout',()=>setTimeout(()=>{if(dirty&&!document.activeElement?.matches('#m input,#m select'))render()},200));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){P.d=today();J=today();render()}});
 function makeDb(){const api=(m,p,b)=>fetch('/api/'+p,{method:m,headers:{'Content-Type':'application/json','X-Init':(window.Telegram&&Telegram.WebApp.initData)||''},body:b?JSON.stringify(b):undefined}).then(r=>{if(!r.ok)throw new Error('Нет доступа ('+r.status+')');return r.json()}).then(j=>{if(m!=='GET')dispatchEvent(new Event('rf'));return j});
-const w=(m,n,i)=>d=>api(m,n+'/'+i,d);
-return{collection:n=>({doc:i=>({set:w('PUT',n,i),update:w('PATCH',n,i),delete:()=>api('DELETE',n+'/'+i)}),
-onSnapshot(next,err){let last='';const f=async()=>{try{const r=await api('GET',n),j=JSON.stringify(r);if(j!==last){last=j;next({docs:Object.entries(r).map(([id,v])=>({id,data:()=>v}))})}}catch(e){err&&err(e)}};f();const t=setInterval(f,3000);addEventListener('rf',f);return()=>clearInterval(t)}})}}
-(async()=>{
- db=makeDb();
- const sub=(n,k)=>col(n).onSnapshot(q=>{S[k]=q.docs.map(d=>({id:d.id,...d.data()}));if(!$('#dlg').open&&!document.activeElement?.matches('input,select'))render()},er=>{$('#m').textContent='Ошибка: '+er.message});
- sub('places','places');sub('tariffs','tariffs');sub('sessions','sessions');sub('expenses','expenses');
- col('cfg').onSnapshot(q=>{const d=q.docs.find(x=>x.id==='main');S.cfg=d?d.data():DEF;if(!document.activeElement?.matches('input,select'))render()});
- render();
- setInterval(()=>{now=Date.now();if(tab==='live'&&!$('#dlg').open&&!document.activeElement?.matches('input,select'))render()},1000);
-})();
+ const w=(m,n,i)=>d=>api(m,n+'/'+i,d);return{collection:n=>({doc:i=>({set:w('PUT',n,i),update:w('PATCH',n,i),delete:()=>api('DELETE',n+'/'+i)}),
+ onSnapshot(next,err){let last='';const f=async()=>{try{const r=await api('GET',n),j=JSON.stringify(r);if(j!==last){last=j;next({docs:Object.entries(r).map(([id,v])=>({id,data:()=>v}))})}}catch(e){err&&err(e)}};f();setInterval(f,3000);addEventListener('rf',f)}})}}
+db=makeDb();
+const upd_=()=>{if(document.activeElement?.matches('#m input,#m select'))dirty=true;else render()};
+for(const [n,k] of [['places','places'],['tariffs','tariffs'],['sessions','sessions'],['expenses','expenses'],['shifts','shifts']])col(n).onSnapshot(q=>{S[k]=q.docs.map(d=>({id:d.id,...d.data()}));upd_()},er=>{$('#m').textContent='Ошибка: '+er.message});
+col('cfg').onSnapshot(q=>{const d=q.docs.find(x=>x.id==='main');S.cfg=d?d.data():DEF;upd_()});
+render();setInterval(tick,1000);setTimeout(tick,50);
 </script></body></html>
