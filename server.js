@@ -1,5 +1,6 @@
 // Без зависимостей. Node 18+.
-// Переменные: BOT_TOKEN, BASE_URL, ALLOWED_IDS (через запятую). Необязательно: OWNER_ID, DATA_FILE, PORT.
+// Переменные: BOT_TOKEN, BASE_URL, OWNER_ID (Telegram ID владельца). Необязательно: DATA_FILE, PORT.
+// Сотрудников владелец добавляет в приложении: Настройки → Сотрудники.
 const http = require('http'), fs = require('fs'), path = require('path'), crypto = require('crypto');
 const TOKEN = process.env.BOT_TOKEN, BASE = process.env.BASE_URL, PORT = process.env.PORT || 3000;
 const ALLOWED = (process.env.ALLOWED_IDS || '').split(',').map(s => s.trim()).filter(Boolean);
@@ -51,14 +52,31 @@ async function restore() {
 }
 process.on('SIGTERM', async () => { await Promise.race([backup(), new Promise(r => setTimeout(r, 8000))]); process.exit(0); });
 
-function authed(initData) {
-  if (DEV) return true;
-  if (!initData || !TOKEN) return false;
+const COLS = ['places', 'tariffs', 'sessions', 'expenses', 'shifts', 'cfg', 'staff'];
+function getUser(initData) {
+  if (DEV) return { id: 'dev', name: 'Владелец', owner: true, perms: {} };
+  if (!initData || !TOKEN) return null;
   const p = new URLSearchParams(initData), hash = p.get('hash'); p.delete('hash');
   const str = [...p.entries()].map(([k, v]) => k + '=' + v).sort().join('\n');
   const secret = crypto.createHmac('sha256', 'WebAppData').update(TOKEN).digest();
-  if (crypto.createHmac('sha256', secret).update(str).digest('hex') !== hash) return false;
-  try { return ALLOWED.includes(String(JSON.parse(p.get('user')).id)); } catch (e) { return false; }
+  if (crypto.createHmac('sha256', secret).update(str).digest('hex') !== hash) return null;
+  let u; try { u = JSON.parse(p.get('user')); } catch (e) { return null; }
+  const id = String(u.id);
+  if (id === String(OWNER)) {
+    const nm = u.first_name || 'Владелец'; DB.meta = DB.meta || {};
+    if (!DB.meta.owner || DB.meta.owner.name !== nm) { DB.meta.owner = { name: nm }; persist(); }
+    return { id, name: nm, owner: true, perms: {} };
+  }
+  const s = (DB.staff || {})[id];
+  return s && s.active !== false ? { id, name: s.name, owner: false, perms: s.perms || {} } : null;
+}
+const isMember = id => String(id) === String(OWNER) || !!((DB.staff || {})[id] && DB.staff[id].active !== false);
+function needPerm(m, col, d) { // какое право нужно для записи
+  if (col === 'places' || col === 'tariffs' || col === 'cfg') return 'settings';
+  if (col === 'sessions') { if (m === 'DELETE') return 'delete'; if (m === 'PUT' && d.status === 'done') return 'manual'; if (d.status === 'cancelled') return 'cancel'; return 'run'; }
+  if (col === 'expenses') return m === 'DELETE' ? 'delete' : 'expenses';
+  if (col === 'shifts') return m === 'DELETE' ? 'owner' : 'shifts';
+  return 'owner';
 }
 const server = http.createServer((req, res) => {
   const u = new URL(req.url, 'http://x');
@@ -66,14 +84,24 @@ const server = http.createServer((req, res) => {
     const f = [path.join(__dirname, 'public', 'index.html'), path.join(__dirname, 'index.html')].find(fs.existsSync);
     res.setHeader('Content-Type', 'text/html; charset=utf-8'); return res.end(fs.readFileSync(f));
   }
-  if (!authed(req.headers['x-init'])) { res.statusCode = 403; return res.end('{"error":"forbidden"}'); }
+  const user = getUser(req.headers['x-init']);
+  if (!user) { res.statusCode = 403; return res.end('{"error":"forbidden"}'); }
   const [, , col, id] = u.pathname.split('/');
   let body = ''; req.on('data', c => body += c);
   req.on('end', () => {
-    res.setHeader('Content-Type', 'application/json'); DB[col] = DB[col] || {};
-    if (req.method === 'GET') return res.end(JSON.stringify(DB[col]));
-    if (!id) { res.statusCode = 400; return res.end('{}'); }
-    const d = body ? JSON.parse(body) : {};
+    res.setHeader('Content-Type', 'application/json');
+    const fail = (c, e) => { res.statusCode = c; res.end(JSON.stringify({ error: e })); };
+    if (col === 'me') {
+      const team = [(DB.meta && DB.meta.owner && DB.meta.owner.name) || 'Владелец', ...Object.values(DB.staff || {}).filter(s => s.active !== false).map(s => s.name)];
+      return res.end(JSON.stringify({ id: user.id, name: user.name, role: user.owner ? 'owner' : 'staff', perms: user.perms, team }));
+    }
+    if (!COLS.includes(col)) return fail(404, 'unknown');
+    DB[col] = DB[col] || {};
+    if (req.method === 'GET') return res.end(JSON.stringify(col === 'staff' && !user.owner ? {} : DB[col]));
+    if (!id) return fail(400, 'id');
+    let d = {}; try { d = body ? JSON.parse(body) : {}; } catch (e) { return fail(400, 'json'); }
+    const need = needPerm(req.method, col, d);
+    if (!user.owner && (need === 'owner' || !user.perms[need])) return fail(403, 'no_perm');
     if (req.method === 'PUT') DB[col][id] = d;
     else if (req.method === 'PATCH') DB[col][id] = { ...(DB[col][id] || {}), ...d };
     else if (req.method === 'DELETE') delete DB[col][id];
@@ -89,7 +117,7 @@ async function bot() {
       const r = await tg('getUpdates', { offset: off, timeout: 30 });
       for (const up of r.result || []) {
         off = up.update_id + 1; const m = up.message; if (!m) continue;
-        if (!ALLOWED.includes(String(m.from.id))) { await tg('sendMessage', { chat_id: m.chat.id, text: 'Нет доступа. Ваш ID: ' + m.from.id }); continue; }
+        if (!isMember(m.from.id)) { await tg('sendMessage', { chat_id: m.chat.id, text: 'Нет доступа. Ваш ID: ' + m.from.id }); continue; }
         if (m.text === '/backup') { const fd = new FormData(); fd.append('chat_id', m.chat.id); fd.append('document', new Blob([JSON.stringify(DB)]), 'club-backup.json'); await tgForm('sendDocument', fd); continue; }
         await tg('sendMessage', { chat_id: m.chat.id, text: 'Учёт клуба', reply_markup: { inline_keyboard: [[{ text: 'Открыть', web_app: { url: BASE } }]] } });
       }
